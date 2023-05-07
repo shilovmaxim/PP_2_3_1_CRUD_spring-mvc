@@ -25,6 +25,23 @@ public class UserServiceImp implements UserService {
         userDao.add(user);
     }
 
+    @Transactional
+    @Override
+    public void update(User user) {
+        userDao.update(user);
+    }
+
+    @Transactional
+    @Override
+    public void deleteById(Long id) {
+        userDao.deleteById(id);
+    }
+
+    @Override
+    public User findById(Long id) {
+        return userDao.findById(id);
+    }
+
     @Override
     public List<User> listUsers() {
         return userDao.listUsers();

@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class UserDaoImp implements UserDao {
@@ -17,14 +18,29 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public void add(User user) {
-        entityManager.getTransaction().begin();
         entityManager.persist(user);
-        entityManager.getTransaction().commit();
+    }
+
+    @Override
+    public void update(User user) {
+        entityManager.merge(user);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        User user = findById(id);
+        if (user != null) entityManager.remove(user);
+    }
+
+    @Override
+    public User findById(Long id) {
+        Optional<User> foundUser = Optional.of(entityManager.find(User.class, id));
+        return foundUser.orElse(null);
     }
 
     @Override
     public List<User> listUsers() {
-        TypedQuery<User> query = entityManager.createQuery("SELECT u FROM users u", User.class);
+        TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u", User.class);
         return query.getResultList();
     }
 
