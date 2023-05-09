@@ -8,7 +8,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,7 +26,8 @@ public class UserDaoImp implements UserDao {
 
     private boolean uniqEmail(String email) {
         try {
-            TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.email=" + "'" + email + "'", User.class);
+            TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.email=:email", User.class)
+                    .setParameter("email", email);
             return query.getSingleResult() == null;
 
         } catch (NoResultException ignored) {
@@ -69,7 +69,8 @@ public class UserDaoImp implements UserDao {
     @Override
     public Long findByEmail(String email) {
         try {
-            TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.email=" + "'" + email + "'", User.class);
+            TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.email=:email", User.class)
+                    .setParameter("email", email);
             return query.getSingleResult().getId();
         } catch (NoResultException ignored) {
             return 0L;
