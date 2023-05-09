@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add user</title>
+    <title>Find user</title>
     <style>
         body {
             font-size: 120%;
@@ -12,6 +12,8 @@
     </style>
 </head>
 <body>
+<div th:align="center"><p><a href="/">Home</a></p>
+</div>
 <div th:align="center">
     <form th:method="POST" th:action="@{/find}" th:object="${user}">
         <label for="email">Enter email: </label>
@@ -20,6 +22,5 @@
         <input type="submit" value="Find user!"/>
     </form>
 </div>
-<p th:align="center"><a href="/">Home</a></p>
 </body>
 </html>

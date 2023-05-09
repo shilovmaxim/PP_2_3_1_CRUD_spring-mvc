@@ -63,8 +63,7 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public User findById(Long id) {
-        Optional<User> foundUser = Optional.of(entityManager.find(User.class, id));
-        return foundUser.orElse(new User("none", "none", "none"));
+        return entityManager.find(User.class, id);
     }
 
     @Override

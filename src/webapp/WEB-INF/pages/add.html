@@ -12,6 +12,7 @@
     </style>
 </head>
 <body>
+<div th:align="center"><p th:align="center"><a href="/">Home</a></p></div>
 <div th:align="center">
     <form th:method="POST" th:action="@{/add}" th:object="${user}">
         <label for="name">Enter name: </label>
@@ -29,6 +30,5 @@
         <input type="submit" value="Create user!"/>
     </form>
 </div>
-<p th:align="center"><a href="/">Home</a></p>
 </body>
 </html>
