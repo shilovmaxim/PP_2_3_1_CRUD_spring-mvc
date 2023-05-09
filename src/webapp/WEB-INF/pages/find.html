@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add user</title>
+    <style>
+        body {
+            font-size: 120%;
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            color: #333366;
+        }
+    </style>
+</head>
+<body>
+<div th:align="center">
+    <form th:method="POST" th:action="@{/find}" th:object="${user}">
+        <label for="email">Enter email: </label>
+        <input type="text" th:field="*{email}" id="email"/>
+        <br/>
+        <input type="submit" value="Find user!"/>
+    </form>
+</div>
+<p th:align="center"><a href="/">Home</a></p>
+</body>
+</html>

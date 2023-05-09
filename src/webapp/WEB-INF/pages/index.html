@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users list</title>
+    <style>
+        body {
+            font-size: 120%;
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            color: #333366;
+        }
+    </style>
+</head>
+<body>
+<h1 th:align="center">Users list (first 10 users)</h1>
+<div>
+    <table th:border="1" th:cellpadding="10" th:align="center">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Lastname</th>
+            <th>email</th>
+        </tr>
+        <tr th:each="user : ${listUsers}">
+            <td><a th:href="@{/{id}(id=${user.getId()})}" th:utext="${user.getId()}"></a></td>
+            <td><a th:href="@{/{id}(id=${user.getId()})}" th:utext="${user.getFirstName()}"></a></td>
+            <td><a th:href="@{/{id}(id=${user.getId()})}" th:utext="${user.getLastName()}"></a></td>
+            <td><a th:href="@{/{id}(id=${user.getId()})}" th:utext="${user.getEmail()}"></a></td>
+        </tr>
+    </table>
+</div>
+<p th:align="center"><a href="/add">Add new user</a></p>
+<p th:align="center">Only the first 10 users are displayed here! <a href="/find">Find user</a></p>
+</body>
+</html>
