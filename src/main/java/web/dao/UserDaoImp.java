@@ -58,6 +58,7 @@ public class UserDaoImp implements UserDao {
         if (user != null) {
             entityManager.remove(user);
         }
+        throw new NullPointerException("There is no such id = " + id);
     }
 
     @Override

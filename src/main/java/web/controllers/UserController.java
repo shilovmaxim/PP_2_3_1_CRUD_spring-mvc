@@ -49,7 +49,7 @@ public class UserController {
     public String find(@ModelAttribute("user") User user) {
         Long id = userService.findByEmail(user.getEmail());
         System.out.println("Find id: " + id);
-        return id > 0L ? "redirect:/" + id : "/find";
+        return id > 0L ? "redirect:/" + id : "/not_found";
     }
 
     @GetMapping("/{id}/edit")
@@ -61,12 +61,11 @@ public class UserController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Long id, ModelMap model) {
         model.addAttribute("user", userService.findById(id));
-        return "/user";
+        return model.getAttribute("user") != null ? "/user" : "/404";
     }
 
     @PatchMapping("/{id}")
     public String update(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
-
         if (bindingResult.hasErrors()) {
             return "/edit";
         }
@@ -76,9 +75,7 @@ public class UserController {
 
     @DeleteMapping("/{id}/edit")
     public String delete(@PathVariable("id") Long id) {
-        if (id != null) {
-            userService.deleteById(id);
-        }
+        userService.deleteById(id);
         return "redirect:/";
     }
 
