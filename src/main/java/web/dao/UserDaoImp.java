@@ -38,27 +38,26 @@ public class UserDaoImp implements UserDao {
     @Override
     public void add(User user) {
         String email = user.getEmail();
-        if ((user.getFirstName() != null) &
-                (user.getLastName() != null) &
-                (email != null) &
-                ((uniqEmail(email)) && validateEmail(email))) {
+        if ((user.getFirstName() != null)
+                & (user.getLastName() != null)
+                & (email != null)
+                & ((uniqEmail(email)) && validateEmail(email))) {
             entityManager.persist(user);
         }
     }
 
     @Override
-    public void update(Long id, User user) {
-        User oldUser = findById(id);
-        oldUser.setFirstName(user.getFirstName());
-        oldUser.setLastName(user.getLastName());
-        oldUser.setEmail(user.getEmail());
-        entityManager.merge(oldUser);
+    public void update(User user) {
+        entityManager.merge(user);
     }
 
     @Override
     public void deleteById(Long id) {
         User user = findById(id);
-        if (user != null) entityManager.remove(user);
+        if (user != null) {
+            entityManager.remove(user);
+        }
+        throw new NullPointerException("There is no such id = " + id);
     }
 
     @Override
@@ -80,11 +79,7 @@ public class UserDaoImp implements UserDao {
     @Override
     public List<User> listUsers() {
         TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u", User.class);
-        List<User> listUsers = query.getResultList();
-        if (listUsers.size() > 10) {
-            return listUsers.stream().limit(10).toList();
-        }
-        return listUsers;
+        return query.getResultList();
     }
 
 }

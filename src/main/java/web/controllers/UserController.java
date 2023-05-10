@@ -1,6 +1,5 @@
 package web.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -16,7 +15,6 @@ public class UserController {
 
     private final UserService userService;
 
-    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -51,8 +49,7 @@ public class UserController {
     public String find(@ModelAttribute("user") User user) {
         Long id = userService.findByEmail(user.getEmail());
         System.out.println("Find id: " + id);
-
-        return id > 0L ? "redirect:/" + id : "/find";
+        return id > 0L ? "redirect:/" + id : "/not_found";
     }
 
     @GetMapping("/{id}/edit")
@@ -64,16 +61,15 @@ public class UserController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Long id, ModelMap model) {
         model.addAttribute("user", userService.findById(id));
-        return "/user";
+        return model.getAttribute("user") != null ? "/user" : "/404";
     }
 
     @PatchMapping("/{id}")
-    public String update(@Valid @ModelAttribute("user") User user, BindingResult bindingResult
-            , @PathVariable("id") Long id) {
+    public String update(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "/edit";
         }
-        userService.update(id, user);
+        userService.update(user);
         return "redirect:/";
     }
 

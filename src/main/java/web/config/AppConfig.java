@@ -33,7 +33,6 @@ public class AppConfig implements WebMvcConfigurer {
 
     private final ApplicationContext applicationContext;
 
-    @Autowired
     public AppConfig(Environment env, ApplicationContext applicationContext) {
         this.env = env;
         this.applicationContext = applicationContext;

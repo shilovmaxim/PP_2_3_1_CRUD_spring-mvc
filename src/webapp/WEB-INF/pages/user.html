@@ -23,13 +23,13 @@
             <th>Lastname</th>
             <th>email</th>
         </tr>
-        <tr>
+        <tr th:align="center">
             <td th:utext="${user.getId()}"></td>
             <td th:utext="${user.getFirstName()}"></td>
             <td th:utext="${user.getLastName()}"></td>
             <td th:utext="${user.getEmail()}"></td>
         </tr>
-        <tr>
+        <tr th:align="center">
             <td colspan="2"><a th:href="@{/{id}/edit(id=${user.getId()})}">Edit user</a></td>
             <td colspan="2">
                 <form th:method="DELETE" th:action="@{/{id}/edit(id=${user.getId()})}">
