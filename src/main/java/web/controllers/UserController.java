@@ -48,7 +48,6 @@ public class UserController {
     @PostMapping("/find")
     public String find(@ModelAttribute("user") User user) {
         Long id = userService.findByEmail(user.getEmail());
-        System.out.println("Find id: " + id);
         return id > 0L ? "redirect:/" + id : "/not_found";
     }
 

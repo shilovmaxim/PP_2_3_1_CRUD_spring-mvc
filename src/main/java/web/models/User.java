@@ -3,6 +3,7 @@ package web.models;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
@@ -16,32 +17,22 @@ public class User {
 
     @Column(name = "name")
     @NotEmpty(message = "Not by empty")
-    @Size(min = 1, max = 50, message = "Name in range 1..30 symbols")
+    @NotNull
+    @Size(min = 1, max = 50, message = "Name in range 1..50 symbols")
     private String firstName;
 
     @Column(name = "last_name")
     @NotEmpty(message = "Not by empty")
+    @NotNull
     private String lastName;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email" ,unique = true)
     @NotEmpty(message = "Not by empty")
+    @NotNull
     @Email(message = "Invalid email")
     private String email;
 
     public User() {
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User user)) return false;
-        return Objects.equals(email, user.email); // Одинаковые email у разных людей недопустимы,
-                                                  // поэтому id и остальные поля можно не проверять
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, email);
     }
 
     public User(String firstName, String lastName, String email) {
@@ -80,5 +71,18 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User user)) return false;
+        return Objects.equals(email, user.email); // Одинаковые email у разных людей недопустимы,
+                                                  // поэтому id и остальные поля можно не проверять
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, email);
     }
 }

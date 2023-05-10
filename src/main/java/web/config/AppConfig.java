@@ -57,6 +57,7 @@ public class AppConfig implements WebMvcConfigurer {
         Properties props = new Properties();
         props.put("hibernate.show_sql", env.getRequiredProperty("hibernate.show_sql"));
         props.put("hibernate.hbm2ddl.auto", env.getRequiredProperty("hibernate.hbm2ddl.auto"));
+        props.put("hibernate.validator.apply_to_ddl", env.getRequiredProperty("hibernate.validator.apply_to_ddl"));
 
         final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         entityManager.setJpaVendorAdapter(vendorAdapter);
